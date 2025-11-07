@@ -49,9 +49,9 @@ ifeq (${COMPILE},"cray-cuda") # mpif90 shipped with PGI compiler
     FCLIBS    = -L$(MPICH_DIR)/lib -lmpich
     FC        = ftn$S
     ifeq (${MODE},"opt")
-        OLEVEL = CUDA_HOME=$(CUDATOOLKIT_HOME) -O3 -Mcuda=cc80
+        OLEVEL = CUDA_HOME=$(CUDATOOLKIT_HOME) -O3 -Mcuda=$(CCA)
     else
-        OLEVEL = -Mcuda=cc80 -g
+        OLEVEL = -Mcuda=$(CCA) -g
     endif
 endif
 
@@ -59,18 +59,14 @@ ifeq (${COMPILE},"nv-cuda") # mpif90 shipped with PGI compiler
     FC = mpif90
     MODULE_FLAG = -module$S
     ifeq (${MODE},"opt")
-        #OLEVEL = -O3 -Mcuda=cc70,cuda10.1,ptxinfo
-        #OLEVEL = -O3 -Mcuda=cc80,cuda$(CUDA_VER)
-        OLEVEL = -O3 -cuda -gpu=cc80,cuda$(CUDA_VER)
+        OLEVEL = -O3 -cuda -gpu=$(CCA),cuda$(CUDA_VER)
         ifeq (${CUDA_VER},"")
-             OLEVEL = -O3 -cuda -gpu=cc80
+             OLEVEL = -O3 -cuda -gpu=$(CCA)
         endif
     else
-        #OLEVEL = -Mcuda=cc80,cuda11.0,ptxinfo -g -Minfo
-        #OLEVEL = -Mcuda=cc80,cuda$(CUDA_VER) -g -Minfo
-        OLEVEL = -cuda -gpu=cc80,cuda$(CUDA_VER)
+        OLEVEL = -cuda -gpu=$(CCA),cuda$(CUDA_VER)
         ifeq (${CUDA_VER},"")
-             OLEVEL = -O3 -cuda -gpu=cc80 -g -Minfo #=accel
+             OLEVEL = -O3 -cuda -gpu=$(CCA) -g -Minfo #=accel
         endif
     endif
 endif

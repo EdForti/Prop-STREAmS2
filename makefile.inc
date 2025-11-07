@@ -9,6 +9,7 @@ COMPILE  = "nv-cuda"
 MODE     = "opt"
 PREC     = "double"
 CUDA_VER = 11.8
+CCA      = cc80
 MPI_CMD  = 
 CGAL     = "no"
 CATALYST = "no"
