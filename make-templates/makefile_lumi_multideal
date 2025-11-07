@@ -1,0 +1,51 @@
+#----------------------------------------------------------------------
+# SUPPORTED COMPILE: hip
+# SUPPORTED MODES  : opt, debug [default=debug]
+# SUPPORTED PRECISIONS (PREC) : single, double [default=double]
+#----------------------------------------------------------------------
+EQUATION = "multideal"
+BACKEND  = "amd"
+COMPILE  = "hip"
+MODE     = "opt"
+PREC     = "double"
+CGAL     = "yes"
+CATALYST = "no"
+
+CGAL_INCLUDE = -I/pfs/lustrep2/scratch/project_465001953/SOFTWARE/INSTALL_CGAL-5.0.2/include/ -I/opt/cray/pe/gcc/mpfr/3.1.4/include/ -I/appl/lumi/SW/LUMI-22.12/G/EB/Boost/1.81.0-cpeGNU-22.12/include 
+
+# Modules on LUMI
+# module load CrayEnv rocm/5.0.2 PrgEnv-gnu
+
+# Install Hipfort
+# git clone https://github.com/ROCmSoftwarePlatform/hipfort
+# git checkout rocm-5.1.0 (or greater)
+# mkdir build INSTALL ; cd build
+# cmake -DHIPFORT_INSTALL_DIR=../INSTALL/ -DCMAKE_Fortran_COMPILER=ftn ..
+# make install
+
+# Add the following variables in bashrc
+# export HIPFORT_COMPILER=ftn
+# export GPU_ARCH=gfx90a
+# export HIP_PLATFORM=amd
+# export ROCM_PATH=/opt/rocm-5.0.2/
+# export HIPFORT=/users/srcs/hipfort/INSTALL2/
+# export MPICH_GPU_SUPPORT_ENABLED=1
+
+# Allocate node
+# salloc --partition=eap --nodes=1 --account=project_465000141 --time=00:30:0 --ntasks-per-node=8 --gpus-per-node=8 --mem=480G  --exclusive
+# srun ../../streams_2.exe
+HIPFC = ftn
+HIPCC = hipcc -fPIC --offload-arch=$(GPU_ARCH)
+INCLUDE   = -I$(MPICH_DIR)/include -I$(HIPFORT)/include/hipfort/amdgcn/
+FCLIBS    = -L$(MPICH_DIR)/lib -lmpi -L${CRAY_MPICH_ROOTDIR}/gtl/lib -lmpi_gtl_hsa -Wl,--copy-dt-needed-entries -L$(HIPFORT)/lib/ -lhipfort-amdgcn
+
+CANTERA = "yes"
+CANTERA_ROOT    :=  /pfs/lustrep1/users/fratinim/CANTERA_GCC13/install_cantera
+CANTERA_INCLUDE := -I${CANTERA_ROOT}/include/cantera/ext -I${CANTERA_ROOT}/include/cantera -I${CANTERA_ROOT}/include 
+CANTERA_LIB     := ${CANTERA_ROOT}/lib
+CANTERA_LDFLAGS := -L${CANTERA_LIB}/ -lcantera_fortran -lcantera -Wl,-rpath,${CANTERA_LIB} -ldl -lstdc++ -lsci_gnu -lblas -Wl,--copy-dt-needed-entries
+
+define LOAD
+module load LUMI/24.03 partition/G rocm/6.0.3 PrgEnv-gnu/8.5.0
+endef
+export LOAD

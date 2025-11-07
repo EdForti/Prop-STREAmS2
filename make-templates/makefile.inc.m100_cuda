@@ -1,0 +1,48 @@
+#----------------------------------------------------------------------
+# SUPPORTED COMPILE: nv-cuda, nv, intel, gnu, ibmxl, cray-cuda
+# SUPPORTED MODES  : opt, debug [default=debug]
+# SUPPORTED PRECISIONS (PREC) : single, double [default=double]
+#----------------------------------------------------------------------
+EQUATION = "multideal"
+BACKEND  = "gpu"
+COMPILE  = "nv-cuda"
+MODE     = "opt"
+PREC     = "double"
+CUDA_VER = 11.0
+MPI_CMD  = mpipgifort
+
+#-------------------------------------------------------------------------------------------------------
+# NO-INSITU COMPILATION
+#-------------------------------------------------------------------------------------------------------
+# HPC-SDK MPI
+# module load gnu/8.4.0 hpc-sdk/2022--binary
+#-------------------------------------------------------------------------------------------------------
+# SPECTRUM MPI
+# module load gnu/8.4.0 hpc-sdk/2022--binary spectrum_mpi/10.4.0--binary
+#-------------------------------------------------------------------------------------------------------
+CGAL     = "no"
+CGAL_INCLUDE = -I/m100_scratch/userinternal/fsalvado/CGAL/INSTALL_CGAL-5.0.2/include/ -I /cineca/prod/opt/libraries/mpfr/4.0.2/gnu--8.4.0/include
+CGAL_LDFLAGS = -Wl,-rpath,/cineca/prod/opt/compilers/gnu/8.4.0/none/lib64 /cineca/prod/opt/compilers/gnu/8.4.0/none/lib64/libstdc++.so.6.0.25
+
+#-------------------------------------------------------------------------------------------------------
+# INSITU COMPILATION
+#-------------------------------------------------------------------------------------------------------
+# HPC-SDK MPI
+# module load autoload profile/candidate paraview_egl python gnu/8.4.0; module load hpc-sdk/2022--binary
+#-------------------------------------------------------------------------------------------------------
+# SPECTRUM MPI
+# module load autoload profile/candidate hpc-sdk/2022--binary paraview_egl python gnu/8.4.0
+#-------------------------------------------------------------------------------------------------------
+CATALYST = "no"
+PVDIR := ${PARAVIEW_HOME}
+PARAVIEW_ROOT=${PARAVIEW_HOME}
+PVINCLUDEDIR := $(PVDIR)/include/paraview-5.8
+PVLIBDIR := $(PVDIR)/lib64
+PVLIBS := $(shell find $(PVLIBDIR) -name '*.so')
+PYLIBDIR := ${PYTHON_HOME}/lib
+PYLIB := $(PYLIBDIR)/libpython3.8.so
+CATALYST_INCLUDE := -I$(PVINCLUDEDIR) $(INCLUDE)
+CATALYST_LDFLAGS := -Wl,-rpath,${PARAVIEW_ROOT}/lib64 ${PARAVIEW_ROOT}/lib64/libvtkParallelMPI-pv5.8.so.1 ${PARAVIEW_ROOT}/lib64/libvtkPVPythonCatalyst-pv5.8.so.5.8 ${PARAVIEW_ROOT}/lib64/libvtkPVCatalyst-pv5.8.so.5.8 ${PARAVIEW_ROOT}/lib64/libvtkPythonInterpreter-pv5.8.so.5.8 ${PYTHON_HOME}/lib/libpython3.8.so ${PARAVIEW_ROOT}/lib64/libvtkCommonDataModel-pv5.8.so.5.8 ${PARAVIEW_ROOT}/lib64/libvtkCommonTransforms-pv5.8.so.5.8 ${PARAVIEW_ROOT}/lib64/libvtkCommonMath-pv5.8.so.5.8 ${PARAVIEW_ROOT}/lib64/libvtkCommonCore-pv5.8.so.5.8 -lpthread ${PARAVIEW_ROOT}/lib64/libvtksys-pv5.8.so.5.8 -ldl -Wl,-rpath-link,${PARAVIEW_ROOT}/lib64 \
+-Wl,-rpath,${GNU_HOME}/lib64 -L${GNU_HOME}/lib64 -lstdc++
+#CXX := g++ -std=c++11 -O2
+

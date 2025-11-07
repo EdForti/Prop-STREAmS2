@@ -1,0 +1,14 @@
+ cp -r code_multi_ideal_dim_reactive code_multi_ideal_dim_reactive_TMP
+ cd code_multi_ideal_dim_reactive_TMP/
+ ll
+ cd src/multideal/
+ !!!!! oss: #include 'index_define.h' must be #include "index_define.h"
+ gfortran -E kernels_gpu.F90 > kernels_gpu.F90.bak
+ gfortran -E multideal_gpu.F90 > multideal_gpu.F90.bak
+ gfortran -E multideal.F90 > multideal.F90.bak
+ mv multideal.F90.bak multideal.F90
+ mv multideal_gpu.F90.bak multideal_gpu.F90
+ mv kernels_gpu.F90.bak kernels_gpu.F90
+ cd ..
+ ../sutils/bin/sutils backend --generate_cpu --remove_plugins ibm insitu --backend_config ../sutils/backend_generation/backend_config.toml --input_dir=./code_multi_ideal_dim_reactive_TMP --indent
+

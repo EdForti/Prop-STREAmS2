@@ -1,0 +1,31 @@
+      ibcleft ibcright ibcbot  ibctop  ibcback ibcfore
+         4       4       4       4        4       4
+      rlx,      rly,     rlz
+      200       100       100
+      xshift yshift zshift
+      -50     -50     -50
+      nib   njb     nkb
+       1      1      1
+      Points in x,y,z
+      7424   2300   2048
+      Flags for uniform spacing  (1 ===> Uniform)
+          0      0        0
+      Flags for exact reflection (1 ===> Reflection)
+          0       0       0
+      nstretchx
+       4
+      position  width   spacing
+        -2.4     0.5      .074
+         8.2     .1       .055
+         8.8     .1       .074
+         18.      3.       1.
+      nstretchy
+      2
+      position  width     spacing
+       -2.4        0.1        0.04
+        3.3        0.1        1.
+      nstretchz
+      2
+      position  width    spacing
+       -2.4        0.1        0.0388
+        2.4        0.1        1.

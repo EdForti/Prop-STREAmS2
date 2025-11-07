@@ -1,0 +1,15 @@
+#----------------------------------------------------------------------
+# SUPPORTED COMPILE: nv-cuda, nv, intel, gnu, ibmxl, cray-cuda
+# SUPPORTED MODES  : opt, debug [default=debug]
+# SUPPORTED PRECISIONS (PREC) : single, double [default=double]
+#----------------------------------------------------------------------
+#module load nvhpc/23.1
+#module load openmpi/4.1.4--nvhpc--23.1-cuda-11.8
+#----------------------------------------------------------------------
+EQUATION = "multideal"
+BACKEND  = "gpu"
+COMPILE  = "nv-cuda"
+MODE     = "opt"
+PREC     = "double"
+CUDA_VER = 11.8
+MPI_CMD  = 

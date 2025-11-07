@@ -1,0 +1,27 @@
+#----------------------------------------------------------------------
+# SUPPORTED COMPILE: pgi-cuda, pgi, intel, gnu, ibmxl, cray-cuda
+# SUPPORTED MODES  : opt, debug [default=debug]
+# SUPPORTED PRECISIONS (PREC) : single, double [default=double]
+#----------------------------------------------------------------------
+EQUATION = "multideal"
+BACKEND  = "gpu"
+COMPILE  = "nv-cuda"
+MODE     = "opt"
+PREC     = "double"
+CUDA_VER = 12.6
+
+CGAL     = "no"
+CGAL_INCLUDE = -I/home/fzanetti/INSTALL_CGAL-5.0.2/include/ -I/opt/share/libs/gcc-12.1.1/boost/1.86.0/include
+CGAL_LDFLAGS = -L/opt/share/libs/gcc-12.1.1/boost/1.86.0/lib
+
+CANTERA  = "yes"
+CANTERA_ROOT    := /home/fzanetti/CANTERA_NVHPC/install_cantera
+CANTERA_INCLUDE := -I${CANTERA_ROOT}/include/cantera -I${CANTERA_ROOT}/include
+CANTERA_LIB     := ${CANTERA_ROOT}/lib
+CANTERA_LDFLAGS := -L${CANTERA_LIB}/ -lcantera_fortran -lcantera -Wl,-rpath,${CANTERA_LIB} -L/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12 -Wl,-rpath,/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12  -ldl -lstdc++ -llapack -lblas -Wl,--copy-dt-needed-entries
+
+define LOAD
+module load nvidia/nvhpc/24.11
+module load gcc-12.1.1/boost/1.86.0
+endef
+export LOAD

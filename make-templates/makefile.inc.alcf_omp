@@ -1,0 +1,25 @@
+#----------------------------------------------------------------------
+# SUPPORTED COMPILE: nv-cuda, nv, intel, gnu, ibmxl, cray-cuda
+# SUPPORTED MODES  : opt, debug [default=debug]
+# SUPPORTED PRECISIONS (PREC) : single, double [default=double]
+#----------------------------------------------------------------------
+EQUATION = "multideal"
+BACKEND  = "omp"
+COMPILE  = "omp-alcf"
+MODE     = "opt"
+PREC     = "double"
+MPI_CMD  =
+MPI_BACKEND = -fc=ifx
+
+CGAL     = "yes"
+CGAL_INCLUDE = -I/home/grossi/Projects/catalyst2_insitu/CGAL/CGAL-5.0.2/include/ -I/home/grossi/Projects/catalyst2_insitu/spack/opt/spack/linux-sles15-icelake/gcc-11.2.0/mpfr-4.2.0-jkb5bkrahnzocvzomtgaqa2c72mzdsjn/include -I/home/grossi/Projects/catalyst2_insitu/spack/opt/spack/linux-sles15-icelake/gcc-11.2.0/boost-1.83.0-tkxlluwe2undyxueqpva6myqmbolk47x/include
+CGAL_LDFLAGS = -lstdc++
+
+#export PARAVIEW_HOME=/home/grossi/Projects/catalyst2_insitu/paraview/install_paraview
+#export CATALYST_IMPLEMENTATION_PATHS="/home/grossi/Projects/catalyst2_insitu/paraview/install_paraview/lib64/catalyst"
+#export CATALYST_IMPLEMENTATION_NAME="paraview"
+#export CATALYST_INSTALL_PREFIX=/home/grossi/Projects/catalyst2_insitu/catalyst2/install_catalyst
+CATALYST = "v2"
+CATALYST_INCLUDE := -I${CATALYST_INSTALL_PREFIX}/include/catalyst-2.0 -I${CATALYST_INSTALL_PREFIX}/include/catalyst-2.0/conduit
+CATALYST_LDFLAGS := -Wl,-rpath,${CATALYST_INSTALL_PREFIX}/lib64 ${CATALYST_INSTALL_PREFIX}/lib64/libcatalyst.so.3 ${CATALYST_INSTALL_PREFIX}/lib64/libcatalyst_fortran.so -Wl,-rpath,${CATALYST_INSTALL_PREFIX}/lib64/catalyst/ 
+

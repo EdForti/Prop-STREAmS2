@@ -1,0 +1,41 @@
+#----------------------------------------------------------------------
+# SUPPORTED COMPILE: hip
+# SUPPORTED MODES  : opt, debug [default=debug]
+# SUPPORTED PRECISIONS (PREC) : single, double [default=double]
+#----------------------------------------------------------------------
+EQUATION = "multideal"
+BACKEND  = "amd"
+COMPILE  = "hip"
+MODE     = "opt"
+PREC     = "double"
+CGAL     = "no"
+CATALYST = "no"
+
+CGAL_INCLUDE = -I/users/srcs/SOFTWARE/CGAL-5.0.2/include/ -I/opt/cray/pe/gcc/mpfr/3.1.4/include/ -I/users/srcs/SOFTWARE/boost_1_80_0/
+
+# Modules on LUMI
+# module load CrayEnv rocm/5.0.2 PrgEnv-gnu
+
+# Install Hipfort
+# git clone https://github.com/ROCmSoftwarePlatform/hipfort
+# git checkout rocm-5.1.0 (or greater)
+# mkdir build INSTALL ; cd build
+# cmake -DHIPFORT_INSTALL_DIR=../INSTALL/ -DCMAKE_Fortran_COMPILER=ftn ..
+# make install
+
+# Add the following variables in bashrc
+# export HIPFORT_COMPILER=ftn
+# export GPU_ARCH=gfx90a
+# export HIP_PLATFORM=amd
+# export ROCM_PATH=/opt/rocm-5.0.2/
+# export HIPFORT=/users/srcs/hipfort/INSTALL2/
+# export MPICH_GPU_SUPPORT_ENABLED=1
+
+# Allocate node
+# salloc --partition=eap --nodes=1 --account=project_465000141 --time=00:30:0 --ntasks-per-node=8 --gpus-per-node=8 --mem=480G  --exclusive
+# srun ../../streams_2.exe
+
+HIPFC = ftn
+HIPCC = hipcc -fPIC --offload-arch=$(GPU_ARCH)
+INCLUDE   = -I$(MPICH_DIR)/include -I$(HIPFORT)/include/amdgcn/
+FCLIBS    = -L$(MPICH_DIR)/lib -lmpi -L${CRAY_MPICH_ROOTDIR}/gtl/lib -lmpi_gtl_hsa -Wl,--copy-dt-needed-entries -L$(HIPFORT)/lib/ -lhipfort-amdgcn

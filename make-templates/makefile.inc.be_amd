@@ -1,0 +1,32 @@
+#----------------------------------------------------------------------
+# SUPPORTED COMPILE: hip
+# SUPPORTED MODES  : opt, debug [default=debug]
+# SUPPORTED PRECISIONS (PREC) : single, double [default=double]
+#----------------------------------------------------------------------
+EQUATION = "multideal"
+BACKEND  = "amd"
+COMPILE  = "hip"
+MODE     = "opt"
+PREC     = "double"
+CGAL     = "no"
+CATALYST = "no"
+
+# Modules on HLRS
+# module load compiler/gcc/11.2.0 mpi/openmpi/4.1.1-gcc-11.2.0 rocm/4.5.2
+
+# Install Hipfort
+# git clone https://github.com/ROCmSoftwarePlatform/hipfort
+# git checkout rocm-5.1.0 (or greater)
+# mkdir build INSTALL ; cd build
+# cmake -DHIPFORT_INSTALL_DIR=../INSTALL/ -DCMAKE_Fortran_COMPILER=mpif90 ..
+# make install
+
+# Add the following variables in bashrc
+# export HIPFORT_COMPILER=mpif90
+# export GPU_ARCH=gfx900
+# export HIP_PLATFORM=amd
+# export ROCM_PATH=/opt/rocm-4.5.2/
+# export HIPFORT=/nfs_home/schowdad/hipfort/INSTALL/
+
+HIPFC = $(HIPFORT)/bin/hipfc
+HIPCC = hipcc -fPIC --offload-arch=$(GPU_ARCH)

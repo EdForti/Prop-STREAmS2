@@ -1,0 +1,7 @@
+FROM INSIDE VI
+
+To remove comments (anything after ;)
+:%s/;.*$//
+
+To format each key/value with 1 blank before and after =
+:%s/\([^=]\{-}\) *= *\(.*\)/\1 = \2 /

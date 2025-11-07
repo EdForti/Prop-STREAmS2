@@ -1,0 +1,5 @@
+N_S, nxmax, nymax, nzmax, nprocx, nprocy, nprocz, y_staggered
+3, 5120, 300, 320, 4, 1, 4, 1
+
+re_delta, u0, ig_start, jg_end, nzsmax, mu0, yg_edge, h_delta
+15228.50091927749, 1719.835189967955, 1, 300, 320, 1.7715022610521118E-004, 1.0703, 0.40

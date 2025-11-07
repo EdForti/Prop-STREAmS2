@@ -1,0 +1,595 @@
+# NEW ROUTINES ADDED FOR C2 (Curvilinear)
+#euler_x_fluxes_hybrid_c2_kernel euler_y_hybrid_c2_kernel bc_nr_lat_x_c2_kernel bc_nr_lat_y_c2_kernel insitu_swirling_c2_kernel insitu_schlieren_c2_kernel 
+#euler_x_update_c2_cuf euler_y_update_c2_cuf force_rhs_2_c2_cuf force_rhs_1_c2_cuf force_var_1_c2_cuf force_var_2_c2_cuf visflx_div_c2_cuf visflx_c2_cuf visflx_nosensor_c2_cuf sensor_c2_cuf compute_dt_c2_cuf
+
+[visflx_div_cuf]
+[visflx_div_cuf.omp]
+idx = [["k","i","j"]] 
+num_loop = [2]
+[visflx_div_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_div_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[visflx_div_c2_cuf]
+[visflx_div_c2_cuf.omp]
+idx = [["k","i","j"]] 
+num_loop = [2]
+[visflx_div_c2_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_div_c2_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[compute_residual_cuf]
+[compute_residual_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[compute_residual_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[compute_residual_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[compute_dt_cuf]
+[compute_dt_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[compute_dt_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[compute_dt_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[compute_dt_c2_cuf]
+[compute_dt_c2_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[compute_dt_c2_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[compute_dt_c2_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[force_var_1_cuf]
+[force_var_1_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[force_var_1_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[force_var_1_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[force_var_2_cuf]
+[force_var_2_cuf.omp]
+idx = [["j","k","i"]] 
+num_loop = [3]
+[force_var_2_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[force_var_2_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[force_var_1_c2_cuf]
+[force_var_1_c2_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[force_var_1_c2_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[force_var_1_c2_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[force_var_2_c2_cuf]
+[force_var_2_c2_cuf.omp]
+idx = [["j","k","i"]] 
+num_loop = [3]
+[force_var_2_c2_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[force_var_2_c2_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[eval_aux_cuf]
+[eval_aux_cuf.omp]
+idx = [["j","k","i"]] 
+num_loop = [3]
+[eval_aux_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[eval_aux_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[visflx_cuf]
+[visflx_cuf.amd]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[visflx_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[visflx_c2_cuf]
+[visflx_c2_cuf.amd]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_c2_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[visflx_c2_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_c2_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[visflx_nosensor_cuf]
+[visflx_nosensor_cuf.amd]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_nosensor_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[visflx_nosensor_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_nosensor_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[visflx_nosensor_c2_cuf]
+[visflx_nosensor_c2_cuf.amd]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_nosensor_c2_cuf.omp]
+idx = [["j","i","k"]] 
+num_loop = [2]
+[visflx_nosensor_c2_cuf.ompc]
+idx = [["k","j","i"]] 
+num_loop = [3]
+[visflx_nosensor_c2_cuf.cpu]
+idx = [["k","j","i"]] 
+num_loop = [3]
+
+[bcrecyc_cuf_1]
+[bcrecyc_cuf_1.amd]
+idx = [["m","j","i"]]
+num_loop = [3]
+
+[euler_x_fluxes_hybrid_kernel]
+[euler_x_fluxes_hybrid_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+idx = ["k","j","i"]
+num_loop = 3
+[euler_x_fluxes_hybrid_kernel.omp]
+idx = ["j","i","k"]
+num_loop = 2
+[euler_x_fluxes_hybrid_kernel.ompc]
+idx = ["k","j","i"] 
+num_loop = 3
+[euler_x_fluxes_hybrid_kernel.cpu]
+idx = ["k","j","i"] 
+num_loop = 3
+
+[euler_x_fluxes_hybrid_c2_kernel]
+[euler_x_fluxes_hybrid_c2_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+idx = ["k","j","i"]
+num_loop = 3
+[euler_x_fluxes_hybrid_c2_kernel.omp]
+idx = ["j","i","k"]
+num_loop = 2
+[euler_x_fluxes_hybrid_c2_kernel.ompc]
+idx = ["k","j","i"] 
+num_loop = 3
+[euler_x_fluxes_hybrid_c2_kernel.cpu]
+idx = ["k","j","i"] 
+num_loop = 3
+
+[euler_x_fluxes_hybrid_rusanov_kernel]
+[euler_x_fluxes_hybrid_rusanov_kernel.omp]
+idx = ["k","j","i"]
+num_loop = 3
+
+[euler_y_hybrid_kernel]
+[euler_y_hybrid_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+[euler_y_hybrid_kernel.omp]
+idx = ["k","i","j"]
+num_loop = 2
+[euler_y_hybrid_kernel.ompc]
+idx = ["k","j","i"] 
+num_loop = 3
+[euler_y_hybrid_kernel.cpu]
+idx = ["k","j","i"] 
+num_loop = 3
+
+[euler_y_hybrid_c2_kernel]
+[euler_y_hybrid_c2_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+[euler_y_hybrid_c2_kernel.omp]
+idx = ["k","i","j"]
+num_loop = 2
+[euler_y_hybrid_c2_kernel.ompc]
+idx = ["k","j","i"] 
+num_loop = 3
+[euler_y_hybrid_c2_kernel.cpu]
+idx = ["k","j","i"] 
+num_loop = 3
+
+[euler_y_hybrid_rusanov_kernel]
+[euler_y_hybrid_rusanov_kernel.omp]
+idx = ["k","j","i"]
+num_loop = 3
+
+[euler_z_hybrid_kernel]
+[euler_z_hybrid_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[euler_z_hybrid_kernel.omp]
+idx = ["j","i","k"]
+num_loop = 2
+[euler_z_hybrid_kernel.ompc]
+idx = ["k","j","i"]
+num_loop = 3
+[euler_z_hybrid_kernel.cpu]
+idx = ["k","j","i"]
+num_loop = 3
+
+[euler_z_hybrid_rusanov_kernel]
+[euler_z_hybrid_rusanov_kernel.omp]
+idx = ["k","j","i"]
+num_loop = 3
+
+[bc_nr_lat_x_kernel]
+[bc_nr_lat_x_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[bc_nr_lat_x_c2_kernel]
+[bc_nr_lat_x_c2_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[bc_nr_lat_y_kernel]
+[bc_nr_lat_y_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[bc_nr_lat_y_c2_kernel]
+[bc_nr_lat_y_c2_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[bc_nr_lat_z_kernel]
+[bc_nr_lat_z_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[insitu_swirling_kernel]
+[insitu_swirling_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[insitu_swirling_c2_kernel]
+[insitu_swirling_c2_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[insitu_schlieren_kernel]
+[insitu_schlieren_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[insitu_schlieren_c2_kernel]
+[insitu_schlieren_c2_kernel.amd]
+blockdim = ["EULERWENO_THREADS_X","EULERWENO_THREADS_Y"]
+launch_bounds = "__launch_bounds__(256)"
+
+[base_file]
+[base_file.amd]
+replace_subroutines = [
+	'''
+	subroutine check_gpu_mem(self, description)
+        class(base_amd_object), intent(inout) :: self !< The base backend.
+        character(*) :: description
+        integer                       :: ierr
+        integer(c_size_t)             :: mem_free, mem_total
+        character(128) :: proc_name
+        integer :: resultlen
+        !call mpi_barrier(mpi_comm_world, ierr)
+        call mpi_get_processor_name(proc_name, resultlen, ierr)
+        call hipCheck(hipMemGetInfo(mem_free, mem_total))
+        !call mpi_barrier(mpi_comm_world, ierr)
+        write(error_unit, "(A,2x,A,2x,A,2x,I0,2x,I0,2x,I0)") 'GPU rank,mems: ', &
+        description,proc_name(1:resultlen),self%myrank, mem_free, mem_total
+    	endsubroutine check_gpu_mem
+	''',
+	'''
+	subroutine initialize(self, field)
+        !< Initialize base backend.
+        class(base_amd_object), intent(inout)        :: self               !< The base backend.
+        class(field_object), target                  :: field
+        type(hipDeviceProp_t), target                :: device_properties  !< Device properties.
+        real(rkind)                                  :: device_mem_avail   !< Device memory available (Gb).
+
+        self%field => field
+        self%nx    = self%field%nx
+        self%ny    = self%field%ny
+        self%nz    = self%field%nz
+        self%ng    = self%field%grid%ng
+        self%nv    = self%field%nv
+
+        call get_mpi_basic_info(self%nprocs, self%myrank, self%masterproc, self%mpi_err)
+        
+        call MPI_COMM_SPLIT_TYPE(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, self%local_comm, self%mpi_err)
+        call MPI_COMM_RANK(self%local_comm, self%mydev, self%mpi_err)
+        call hipCheck(hipSetDevice(self%mydev))
+        call hipCheck(hipGetDeviceProperties(device_properties, self%mydev))
+
+        device_mem_avail = real(device_properties%totalGlobalMem, rkind)/(1024_rkind**3)
+        print '(A,F5.2,A)', ' available device memory ', device_mem_avail, ' Gb'
+
+        call self%alloc()
+
+        endsubroutine initialize
+	'''
+]
+
+[base_file.omp]
+replace_subroutines = [
+    '''
+    subroutine initialize(self, field)
+        !< Initialize base backend.
+        class(base_omp_object), intent(inout)        :: self               !< The base backend.
+        class(field_object), target :: field
+
+        self%field => field
+        self%nx    = self%field%nx
+        self%ny    = self%field%ny
+        self%nz    = self%field%nz
+        self%ng    = self%field%grid%ng
+        self%nv    = self%field%nv
+
+        call get_mpi_basic_info(self%nprocs, self%myrank, self%masterproc, self%mpi_err)
+
+        call self%field%check_cpu_mem(description="--Base-initialization--")
+
+        call MPI_COMM_SPLIT_TYPE(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, self%local_comm, self%mpi_err)
+        call MPI_COMM_RANK(self%local_comm, self%mydev, self%mpi_err)
+        call omp_set_default_device(self%mydev)
+        self%myhost = omp_get_initial_device()
+
+        call self%alloc()
+
+    endsubroutine initialize
+    '''
+   ,'''
+    subroutine check_gpu_mem(self, description)
+        class(base_omp_object), intent(inout) :: self !< The base backend.
+        character(*) :: description
+        integer                       :: ierr
+        !integer(cuda_count_kind)      :: mem_free, mem_total
+        !character(128) :: proc_name
+        !integer :: resultlen
+        !!call mpi_barrier(mpi_comm_world, ierr)
+        !call mpi_get_processor_name(proc_name, resultlen, ierr)
+        !ierr = cudaMemGetInfo(mem_free, mem_total)
+        !!call mpi_barrier(mpi_comm_world, ierr)
+        !write(error_unit, "(A,2x,A,2x,A,2x,I0,2x,I0,2x,I0)") 'GPU rank,mems: ', &
+        !         description,proc_name(1:resultlen),self%myrank, mem_free, mem_total
+    endsubroutine check_gpu_mem
+    '''
+]
+
+[base_file.cpu]
+replace_subroutines = [
+'''
+    subroutine initialize(self, field)
+        !< Initialize base backend.
+        class(base_cpu_object), intent(inout)        :: self               !< The base backend.
+        class(field_object), target :: field
+
+        self%field => field
+        self%nx    = self%field%nx
+        self%ny    = self%field%ny
+        self%nz    = self%field%nz
+        self%ng    = self%field%grid%ng
+        self%nv    = self%field%nv
+
+        call get_mpi_basic_info(self%nprocs, self%myrank, self%masterproc, self%mpi_err)
+
+        call self%field%check_cpu_mem(description="--Base-initialization--")
+
+
+        call self%alloc()
+
+    endsubroutine initialize
+'''
+]
+
+[base_file.ompc]
+replace_subroutines = [
+'''
+    subroutine initialize(self, field)
+        !< Initialize base backend.
+        class(base_ompc_object), intent(inout)        :: self               !< The base backend.
+        class(field_object), target :: field
+
+        self%field => field
+        self%nx    = self%field%nx
+        self%ny    = self%field%ny
+        self%nz    = self%field%nz
+        self%ng    = self%field%grid%ng
+        self%nv    = self%field%nv
+
+        call get_mpi_basic_info(self%nprocs, self%myrank, self%masterproc, self%mpi_err)
+
+        call self%field%check_cpu_mem(description="--Base-initialization--")
+
+
+        call self%alloc()
+
+    endsubroutine initialize
+'''
+]
+
+[equation_gpu_file]
+[equation_gpu_file.amd]
+
+[equation_gpu_file.omp]
+replace_subroutines=[
+    '''
+    subroutine rk_async(self)
+        class(equation_singleideal_omp_object), intent(inout) :: self              !< The equation.
+        integer :: istep, lmax
+        real(rkind) :: rhodt, gamdt, alpdt
+!
+        associate(nx => self%nx, ny => self%ny, nz => self%nz, ng => self%ng, nv => self%nv, &
+                  dt => self%equation_base%dt, ep_order => self%equation_base%ep_order, &
+                  weno_scheme => self%equation_base%weno_scheme, &
+                  conservative_viscous => self%equation_base%conservative_viscous, &
+                  eul_imin => self%equation_base%eul_imin, eul_imax => self%equation_base%eul_imax, &
+                  eul_jmin => self%equation_base%eul_jmin, eul_jmax => self%equation_base%eul_jmax, &
+                  eul_kmin => self%equation_base%eul_kmin, eul_kmax => self%equation_base%eul_kmax, &
+                  channel_case => self%equation_base%channel_case, &
+                  nv_aux => self%nv_aux, &
+                  enable_ibm => self%equation_base%enable_ibm)
+
+            if (enable_ibm>0) then
+             self%equation_base%ibm_force_x = 0._rkind
+             self%equation_base%ibm_force_y = 0._rkind
+             self%equation_base%ibm_force_z = 0._rkind
+            endif
+
+            if (channel_case) self%equation_base%dpdx = 0._rkind
+            lmax = max(ep_order/2, weno_scheme) ! max stencil width
+
+            do istep=1,self%equation_base%nrk
+                rhodt = self%equation_base%rhork(istep)*dt
+                gamdt = self%equation_base%gamrk(istep)*dt
+                alpdt = self%equation_base%alprk(istep)*dt
+
+                call init_flux_kernel(nx, ny, nz, nv, self%fl_gpu, self%fln_gpu, rhodt)
+
+                if (enable_ibm>0) then
+                 call self%base_omp%bcswap(steps=[.true.,.false.,.false.])
+                 call self%base_omp%bcswap_corner(steps=[.true.,.false.,.false.])
+                 !$omp parallel sections
+                 !$omp section
+                 call self%compute_aux(central=1,ghost=0)
+                 !$omp section
+                 call self%base_omp%bcswap(steps=[.false.,.true.,.false.])
+                 call self%base_omp%bcswap_corner(steps=[.false.,.true.,.false.])
+                 call self%base_omp%bcswap(steps=[.false.,.false.,.true.])
+                 call self%base_omp%bcswap_corner(steps=[.false.,.false.,.true.])
+                 !$omp end parallel sections
+                 call self%compute_aux(central=0,ghost=1)
+                 if (istep==1) then
+                  call self%equation_base%ibm_bc_prepare()
+                  if (self%equation_base%ibm_vega_moving>0) then
+!                   if (self%equation_base%ibm_trajectory_points>0) self%ibm_vega_y_gpu = self%equation_base%ibm_vega_y
+                   call self%ibm_inside()
+                  endif
+                 endif
+                 call self%ibm_apply()
+                 call self%update_ghost(do_swap=0) ! needed after application of ibm
+                endif
+
+                call self%compute_aux(central=1, ghost=0)
+                call self%base_omp%bcswap(steps=[.true.,.false.,.false.])
+                !$omp parallel sections
+                !$omp section
+                call self%euler_x(lmax+1,nx-lmax,lmax,nx-lmax,do_update=.false.)
+                !$omp section
+                call self%base_omp%bcswap(steps=[.false.,.true.,.true.])
+                !$omp end parallel sections
+                call self%compute_aux(central=0, ghost=1)
+                call self%euler_x(eul_imin,lmax,eul_imin-1,lmax-1,do_update=.false.)
+                call self%euler_x(nx-lmax+1,eul_imax,nx-lmax+1,eul_imax,do_update=.true.)
+                if (conservative_viscous == 1) then
+                    call self%visflx(mode=6) ! 0=lapl, 1=div, 2=reduced, 3=sensor, 4=lapl_nosensor, 5=stag, 6=reduce_nosens
+                    call self%visflx(mode=5) ! 0=lapl, 1=div, 2=reduced, 3=sensor, 4=lapl_nosensor, 5=stag, 6=reduce_nosens
+                else
+                    call self%visflx(mode=4) ! 0=lapl, 1=div, 2=reduced, 3=sensor, 4=lapl_nosensor, 5=stag, 6=reduce_nosens
+                endif
+                call bcextr_var_kernel(nx, ny, nz, ng, self%w_aux_gpu(:,:,:,10:10))
+                call self%base_omp%bcswap_var(self%w_aux_gpu(:,:,:,10:10), steps=[.true.,.false.,.false.]) ! div/3
+                !$omp parallel sections
+                !$omp section
+                call self%euler_y(eul_jmin,eul_jmax)
+                !$omp section
+                call self%base_omp%bcswap_var(self%w_aux_gpu(:,:,:,10:10), steps=[.false.,.true.,.true.]) ! div/3
+                !$omp end parallel sections
+                call self%euler_z(eul_kmin,eul_kmax)
+                if(istep == 3) then
+                 call self%visflx(mode=3) ! 0=lapl, 1=div, 2=reduced, 3=sensor, 4=lapl_nosensor, 5=stag
+                 call self%base_omp%bcswap_var(self%w_aux_gpu(:,:,:,8:8), steps=[.true.,.false.,.false.]) ! ducros
+                 !$omp parallel sections
+                 !$omp section
+                 if (conservative_viscous==1) then
+                  call self%visflx(mode=7)  ! 0=lapl, 1=div, 2=reduced, 3=sensor, 4=lapl_nosensor, 5=stag, 6=reduce_nosens
+                 else
+                  call self%visflx(mode=1)
+                 endif
+                 !$omp section
+                 call self%base_omp%bcswap_var(self%w_aux_gpu(:,:,:,8:8), steps=[.false.,.true.,.true.]) ! ducros
+                 !$omp end parallel sections
+                else
+                 if (conservative_viscous==1) then
+                  call self%visflx(mode=7)  ! 0=lapl, 1=div, 2=reduced, 3=sensor, 4=lapl_nosensor, 5=stag, 6=reduce_nosens
+                 else
+                  call self%visflx(mode=1)
+                 endif
+                endif
+                call self%bc_nr()
+                call update_flux_kernel(nx, ny, nz, nv, self%fl_gpu, self%fln_gpu, gamdt)
+                if (channel_case) call self%force_rhs()
+                call update_field_kernel(nx, ny, nz, ng, nv, self%base_omp%w_gpu, self%fln_gpu, self%fluid_mask_gpu)
+                if (channel_case) call self%force_var()
+                call self%update_ghost(do_swap=0)
+                if (enable_ibm>0) then
+                  call self%ibm_compute_force(istep)
+                endif
+            enddo
+        endassociate
+    endsubroutine rk_async
+    '''
+]
+[equation_gpu_file.cpu]
+replace_subroutines=[]
+
+[equation_gpu_file.ompc]
+replace_subroutines=[]
+
+[kernels_file]
+[kernels_file.amd]
+replace_subroutines = []
+[kernels_file.omp]
+replace_subroutines = []
+[kernels_file.cpu]
+replace_subroutines = []
+[kernels_file.ompc]
+replace_subroutines = []

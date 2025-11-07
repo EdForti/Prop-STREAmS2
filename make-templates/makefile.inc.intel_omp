@@ -1,0 +1,15 @@
+EQUATION = "multideal"
+BACKEND  = "omp"
+COMPILE  = "omp-intel"
+MODE     = "opt"
+PREC     = "double"
+MPI_CMD  =
+MPI_BACKEND = -fc=ifx
+
+CGAL     = "yes"
+
+CGAL_INCLUDE = -I/home/grossi/Projects/CGAL-5.0.2/include -I/home/grossi/Projects/boost_1_80_0 -I/home/grossi/Projects/mpfr-4.1.0/src
+#CGAL_LDFLAGS = -Wl,-rpath,/leonardo/prod/spack/03/install/0.19/linux-rhel8-icelake/gcc-8.5.0/gcc-11.3.0-tm6phj7wkcw7cuy6gjixemkvh5x2mhza/lib64 /leonardo/prod/spack/03/install/0.19/linux-rhel8-icelake/gcc-8.5.0/gcc-11.3.0-tm6phj7wkcw7cuy6gjixemkvh5x2mhza/lib64/libstdc++.so.6.0.29
+CGAL_LDFLAGS = -lstdc++
+
+CATALYST = "no"
