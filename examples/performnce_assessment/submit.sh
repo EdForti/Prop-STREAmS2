@@ -9,8 +9,6 @@
 #SBATCH --job-name=SS001GPU
 #SBATCH --mem=0
 #SBATCH --error=job.err
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=dalailamalag@gmail.com
 #SBATCH --exclusive
 
 module load profile/global ;

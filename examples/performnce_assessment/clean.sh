@@ -7,3 +7,4 @@ rm slurm*.out
 rm progress.out
 cp GRID/* .
 rm grid.dat
+rm *.err
