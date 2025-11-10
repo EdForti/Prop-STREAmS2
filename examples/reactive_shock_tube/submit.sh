@@ -21,4 +21,4 @@ module load openmpi/4.1.4--gcc--11.3.0-cuda-11.8 ;
 module load nvhpc/25.3 ;
 module load hpcx-mpi/2.19 ;
 
-srun /leonardo/home/userexternal/eforti00/PROP_FOLDER/Main-Prop-STREAmS2/streams_2.exe > data.dat
+srun /leonardo/home/userexternal/eforti00/PROP_FOLDER/Dev-Prop-STREAmS2/streams_2.exe > data.dat
