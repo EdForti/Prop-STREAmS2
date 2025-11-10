@@ -6180,7 +6180,7 @@ contains
         integer     :: iercuda,le
         real(rkind) :: xmsp, diff_den, ddiff, diff_ij, tloc,Beta
         real(rkind), dimension(N_EoI_gpu), intent(in), device :: aw_EoI_gpu,coeff_EoI_gpu
-        integer, dimension(N_EoI_gpu,N_S), intent(in), device :: NainSp_gpu
+        integer, dimension(N_S,N_EoI_gpu), intent(in), device :: NainSp_gpu
         real(rkind), dimension(2), intent(in), device :: Beta0_gpu
 !
         !$cuf kernel do(3) <<<*,*,stream=stream_id>>>
@@ -6224,6 +6224,21 @@ contains
               w_aux_gpu(i,j,k,J_T)  = tt
               w_aux_gpu(i,j,k,J_P)  = pp
               w_aux_gpu(i,j,k,J_C)  = c
+!
+              !Mixture Fraction
+              Beta = 0._rkind
+              if (N_EoI_gpu .ne. 1) then
+               do le = 1,N_EoI_gpu
+                yatm = 0._rkind
+                do lsp = 1,N_S
+                 yatm = yatm + NainSp_gpu(lsp,le)*aw_EoI_gpu(le)*w_aux_gpu(i,j,k,lsp)*mwinv_gpu(lsp)
+                enddo
+                Beta = Beta + coeff_EoI_gpu(le)*yatm/aw_EoI_gpu(le)
+               enddo
+               w_aux_gpu(i,j,k,J_Z) = (Beta-Beta0_gpu(2))/(Beta0_gpu(1)-Beta0_gpu(2))
+              else
+               w_aux_gpu(i,j,k,J_Z) = 0.5_rkind
+              endif
 !
               itt = int((tt-t_min_tab)/dt_tab)+1
               itt = max(itt,1)
@@ -6284,21 +6299,7 @@ contains
                endif
               enddo
 
-              !Mixture Fraction
-              Beta = 0._rkind
-              if (N_EoI_gpu .ne. 1) then
-               do le = 1,N_EoI_gpu
-                yatm = 0._rkind
-                do lsp = 1,N_S
-                 yatm = yatm + NainSp_gpu(le,lsp)*aw_EoI_gpu(le)*w_aux_gpu(i,j,k,lsp)*mwinv_gpu(lsp)
-                enddo
-                Beta = Beta + coeff_EoI_gpu(le)*yatm/aw_EoI_gpu(le)
-               enddo
-               w_aux_gpu(i,j,k,J_Z) = (Beta-Beta0_gpu(2))/(Beta0_gpu(1)-Beta0_gpu(2))
-              else
-               w_aux_gpu(i,j,k,J_Z) = 0.5_rkind
-              endif
-!              print *, w_aux_gpu(i,j,k,J_Z)
+
           enddo
          enddo
         enddo

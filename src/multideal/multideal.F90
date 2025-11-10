@@ -650,7 +650,7 @@ contains
          call self%cfg%get("fluid","enable_soret",self%enable_soret)
         endif 
         if (self%enable_les>0) self%nv_aux = self%nv_aux+1
-        if (self%enable_chemistry>0) self%nv_aux = self%nv_aux+N_S+1
+        if (self%enable_chemistry>0) self%nv_aux = self%nv_aux+2*(N_S+1)
         if (self%enable_pasr>0) self%nv_aux = self%nv_aux+1
         if (self%enable_chemistry>0) self%nv_stat = self%nv_stat+2*N_S+2
         if (self%enable_les>0) self%nv_stat = self%nv_stat + 11
@@ -965,6 +965,7 @@ contains
          self%N_EoI = 1
         endif
 
+        !print *, J_U, J_V, J_W, J_H, J_T, J_P, J_C, J_MU, J_DUC, J_DIV, J_R, J_Z, J_K_COND, J_D_START,J_WDOT_START,J_HRR
         ! LES model
 !       if (self%cfg%has_key("lespar","enable_les")) then
 !        call self%cfg%get("lespar","enable_les",self%enable_les)
@@ -980,6 +981,7 @@ contains
         character(len=30), dimension(:), allocatable :: element_names
         character*3, allocatable, dimension(:) :: Names_EoI
         real(rkind) :: yatm_inflow,yatm_ambient
+        real(rkind), dimension(N_S) :: yinflow
         logical :: found
 
         call self%cfg%get("Zpar","N_EoI",self%N_EoI)
@@ -988,7 +990,7 @@ contains
 
         N_E = nElements(self%mixture_yaml)
         allocate(aw(N_E), element_names(N_E), self%aw_EoI(self%N_EoI))
-        allocate(self%NainSp(self%N_EoI,N_S),self%Beta0(2))
+        allocate(self%NainSp(N_S,self%N_EoI),self%Beta0(2))
         call getAtomicWeights(self%mixture_yaml,aw)
         do le = 1,N_E
          call getElementName(self%mixture_yaml, le, element_names(le))
@@ -996,31 +998,59 @@ contains
           if (element_names(le) .eq. Names_EoI(lezbil)) then
            self%aw_EoI(lezbil) = aw(le)
            do lsp = 1,N_S
-            self%NainSp(lezbil,lsp) = nAtoms(self%mixture_yaml,lsp,le)
+            self%NainSp(lsp,lezbil) = nAtoms(self%mixture_yaml,lsp,le)
            enddo
           endif
          enddo
         enddo
         deallocate(aw,element_names,Names_EoI)
-        !Find inflow on IBM        
-        found = .false.
-        do l = 1, self%ibm_num_bc
-         select case ( self%ibm_type_bc(l) )
-         case (1:4)          ! match 1,2,3,4 - New IBM - Not Workind
-          idx   = l
-          found = .true.
-         exit
-         endselect
-        end do
-        if (.not. found) call fail_input_any("No inflow on IBM")
+        if (self%enable_ibm>0) then
+         !Find inflow on IBM        
+         found = .false.
+         do l = 1, self%ibm_num_bc
+          select case (self%ibm_type_bc(l))
+          case (1) !Supersonic inflow
+           idx   = l
+           found = .true.
+           do lsp=1,N_S
+            yinflow(lsp) = self%ibm_parbc(l,3+lsp)
+           enddo
+          exit
+          case (2) !Supersonic Turbulent Inflow          
+           idx   = l
+           found = .true.
+           do lsp=1,N_S
+            yinflow(lsp) = self%ibm_parbc(l,5+lsp)
+           enddo
+          exit
+          case (3) !Subsonic inflow         
+           idx   = l
+           found = .true.
+           do lsp=1,N_S
+            yinflow(lsp) = self%ibm_parbc(l,2+lsp)
+           enddo
+          exit
+          case (4) !Subsonic Turbulent inflow         
+           idx   = l
+           found = .true.
+           do lsp=1,N_S
+            yinflow(lsp) = self%ibm_parbc(l,4+lsp)
+           enddo
+          exit
+          endselect
+         end do
+         if (.not. found) yinflow(:) = 0._rkind
+        else
+         yinflow(:) = 0._rkind
+        endif
 
         self%Beta0 = 0._rkind
         do lezbil = 1,self%N_EoI
          yatm_inflow  = 0._rkind
          yatm_ambient = 0._rkind
          do lsp = 1,N_S
-          yatm_inflow  = yatm_inflow  + self%NainSp(lezbil,lsp)*self%aw_EoI(lezbil)*self%ibm_parbc(idx,5+lsp)/self%mw(lsp)
-          yatm_ambient = yatm_ambient + self%NainSp(lezbil,lsp)*self%aw_EoI(lezbil)*self%init_mf(lsp)/self%mw(lsp)
+          yatm_inflow  = yatm_inflow  + self%NainSp(lsp,lezbil)*self%aw_EoI(lezbil)*yinflow(lsp)/self%mw(lsp)
+          yatm_ambient = yatm_ambient + self%NainSp(lsp,lezbil)*self%aw_EoI(lezbil)*self%init_mf(lsp)/self%mw(lsp)
          enddo
          self%Beta0(1) = self%Beta0(1) + self%coeff_EoI(lezbil)*yatm_inflow/self%aw_EoI(lezbil)
          self%Beta0(2) = self%Beta0(2) + self%coeff_EoI(lezbil)*yatm_ambient/self%aw_EoI(lezbil)

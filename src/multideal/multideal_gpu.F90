@@ -1557,7 +1557,7 @@ contains
 
         ! Mixture Fraction
         if (self%equation_base%enable_Zbil>0) then
-         allocate(self%NainSp_gpu(self%equation_base%N_EoI,N_S))
+         allocate(self%NainSp_gpu(N_S,self%equation_base%N_EoI))
          allocate(self%coeff_EoI_gpu(self%equation_base%N_EoI))
          allocate(self%aw_EoI_gpu(self%equation_base%N_EoI))
          allocate(self%Beta0_gpu(2))
@@ -2542,7 +2542,7 @@ contains
                if (idx3==1) open(22,file='output_1d_230micro_s.dat')
                if (self%nx>1) then
                 do i=1,self%nx
-                 write(22,100) self%field%x(i),(self%equation_base%w_aux(i,1,1,lsp),lsp=1,self%equation_base%nv_aux)
+                 write(22,'(4ES20.10)') self%field%x(i),self%equation_base%w_aux(i,1,1,J_T),self%equation_base%w_aux(i,1,1,J_U),self%equation_base%w_aux(i,1,1,3)
                 enddo
                endif
                time_from_last_write = 0._rkind !time_from_last_write - self%equation_base%dtsave

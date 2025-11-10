@@ -39,21 +39,30 @@ YH2_Ferrer_230 = Ferrer_data_YH2_230[:,1]
 
 data_170 = np.loadtxt("../output_1d_170micro_s.dat")
 x_170 = data_170[:,0]
-T_170 = data_170[:,14]
-U_170 = data_170[:,10]
+T_170 = data_170[:,1]
+U_170 = data_170[:,2]
 YH2_170 = data_170[:,3]
+#T_170 = data_170[:,14]
+#U_170 = data_170[:,10]
+#YH2_170 = data_170[:,3]
 
 data_190 = np.loadtxt("../output_1d_190micro_s.dat")
 x_190 = data_190[:,0]
-T_190 = data_190[:,14]
-U_190 = data_190[:,10]
+T_190 = data_190[:,1]
+U_190 = data_190[:,2]
 YH2_190 = data_190[:,3]
+#T_190 = data_190[:,14]
+#U_190 = data_190[:,10]
+#YH2_190 = data_190[:,3]
 
 data_230 = np.loadtxt("../output_1d_230micro_s.dat")
 x_230 = data_230[:,0]
-T_230 = data_230[:,14]
-U_230 = data_230[:,10]
+T_230 = data_230[:,1]
+U_230 = data_230[:,2]
 YH2_230 = data_230[:,3]
+#T_230 = data_230[:,14]
+#U_230 = data_230[:,10]
+#YH2_230 = data_230[:,3]
 
 plt.figure()
 plt.plot(x_170, T_170, label="t = 170 $\mu s$", color="black",linewidth=1.5)
