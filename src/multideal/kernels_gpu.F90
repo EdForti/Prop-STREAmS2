@@ -6231,7 +6231,9 @@ contains
                do le = 1,N_EoI_gpu
                 yatm = 0._rkind
                 do lsp = 1,N_S
-                 yatm = yatm + NainSp_gpu(lsp,le)*aw_EoI_gpu(le)*w_aux_gpu(i,j,k,lsp)*mwinv_gpu(lsp)
+                 if (w_aux_gpu(i,j,k,lsp) .gt. 1E-14_rkind) then
+                  yatm = yatm + NainSp_gpu(lsp,le)*aw_EoI_gpu(le)*w_aux_gpu(i,j,k,lsp)*mwinv_gpu(lsp)
+                 endif
                 enddo
                 Beta = Beta + coeff_EoI_gpu(le)*yatm/aw_EoI_gpu(le)
                enddo
@@ -11236,11 +11238,15 @@ contains
                i,j,k,nx,ny,nz,ng,nv_aux,w_aux_gpu)
         radius = ((y_gpu(j) - endepo_param_gpu(2))**2_rkind + (z_gpu(k) - endepo_param_gpu(3))**2_rkind)**0.5_rkind
        
-        prefact = endepo_param_gpu(7)*time*rho*cploc*(endepo_param_gpu(11)-tt)
-        expfact = exp(-endepo_param_gpu(8)*(time-endepo_param_gpu(9)**2))
-        expfact = expfact*exp(-endepo_param_gpu(10)*(x_gpu(i)-endepo_param_gpu(1))**2)
-        torfact = tanh(endepo_param_gpu(6)*(radius-endepo_param_gpu(4)))-tanh(endepo_param_gpu(6)*(radius-endepo_param_gpu(5)))
-        w_gpu(i,j,k,I_E) = w_gpu(i,j,k,I_E) + prefact*expfact*torfact
+        if (radius .gt. endepo_param_gpu(4) .and. radius .lt. endepo_param_gpu(5)) then
+         prefact = endepo_param_gpu(7)*time*rho*cploc*(endepo_param_gpu(11)-tt)
+         !expfact = exp(-endepo_param_gpu(8)*(time-endepo_param_gpu(9)**2))
+         !expfact = expfact*exp(-endepo_param_gpu(10)*(x_gpu(i)-endepo_param_gpu(1))**2)
+         expfact = exp(-endepo_param_gpu(10)*(x_gpu(i)-endepo_param_gpu(1))**2)
+         !torfact = tanh(endepo_param_gpu(6)*(radius-endepo_param_gpu(4)))-tanh(endepo_param_gpu(6)*(radius-endepo_param_gpu(5)))
+         w_gpu(i,j,k,I_E) = w_gpu(i,j,k,I_E) + prefact*expfact!*torfact
+        endif
+        !w_gpu(i,j,k,I_E) = w_gpu(i,j,k,I_E) + prefact*expfact*torfact
        endif
 
        !xp = endepo_param_gpu(1)
